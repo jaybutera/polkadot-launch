@@ -1,3 +1,30 @@
+### Centrifuge Test Environment
+We need both the Centrifuge-chain and Acala binaries.
+
+```bash
+# Install Acala chain
+git clone https://github.com/AcalaNetwork/Acala
+git fetch && git checkout origin/sw/rococo-v1
+git config --global submodule.recurse true
+make init
+make build
+```
+
+Use Parity's tool, [Polkadot-launch](https://github.com/paritytech/polkadot-launch) to start an entire test network from a config file. The config specifies the relay nodes and collators to start. Each must point to a binary file.
+
+```bash
+# Get my fork containing a config.json and spec file
+# Modify the config.json to point to your binary paths of centrifiuge-chain, Acala, and centrifuge-polkadot
+git clone https://github.com/jaybutera/polkadot-launch
+
+# [If spec changes] Build a relay-chain spec file to the local directory
+# <path-to>/target/release/polkadot build-spec --chain rococo-local --disable-default-bootnode --raw > rococo-chachacha-local.json
+```
+
+The config file also specifies to open an hrmp channel from centrifuge-chain (200) to Acala (300).
+
+___
+
 # polkadot-launch
  Simple CLI tool to launch a local [Polkadot](https://github.com/paritytech/polkadot/) test network.
 
