@@ -143,6 +143,7 @@ async function main() {
   }
 
   // Then launch each simple parachain (e.g. an adder-collator)
+  /*
   for (const simpleParachain of config.simpleParachains) {
     const { id, port, balance } = simpleParachain;
     const bin = resolve(config_dir, simpleParachain.bin);
@@ -177,6 +178,7 @@ async function main() {
       await setBalance(relayChainApi, account, balance);
     }
   }
+  */
 
   for (const hrmpChannel of config.hrmpChannels) {
     await ensureOnboarded(relayChainApi, hrmpChannel.sender);
