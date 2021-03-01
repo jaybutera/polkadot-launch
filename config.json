@@ -1,54 +1,54 @@
 {
 	"relaychain": {
-		"bin": "./bin/polkadot",
-		"chain": "rococo-local",
+		"bin": "../cent-polka/polkadot/target/release/polkadot",
+		"chain": "rococo-chachacha-local",
 		"nodes": [
 			{
 				"name": "alice",
 				"wsPort": 9944,
-				"port": 30444
+				"port": 30444,
+                "flags": ["--node-key-file=alice-node.key"]
 			},
 			{
 				"name": "bob",
 				"wsPort": 9955,
-				"port": 30555
+				"port": 30555,
+                "flags": ["--bootnodes=/ip4/127.0.0.1/tcp/30444/p2p/12D3KooWAf7iThMCPgkAncjTfiqPb2Q6nBakwY92shW347ucVbXB"]
 			},
 			{
 				"name": "charlie",
 				"wsPort": 9966,
-				"port": 30666
+				"port": 30666,
+                "flags": ["--bootnodes=/ip4/127.0.0.1/tcp/30444/p2p/12D3KooWAf7iThMCPgkAncjTfiqPb2Q6nBakwY92shW347ucVbXB"]
 			},
 			{
 				"name": "dave",
 				"wsPort": 9977,
-				"port": 30777
+				"port": 30777,
+                "flags": ["--bootnodes=/ip4/127.0.0.1/tcp/30444/p2p/12D3KooWAf7iThMCPgkAncjTfiqPb2Q6nBakwY92shW347ucVbXB"]
 			}
 		]
 	},
 	"parachains": [
 		{
-			"bin": "./bin/rococo-collator",
+			"bin": "../centrifuge-chain/target/release/centrifuge-chain",
+            "chain": "charcoal-chachacha-local",
 			"id": "200",
 			"wsPort": 9988,
 			"port": 31200,
 			"balance": "1000000000000000000000",
-			"flags": ["--", "--execution=wasm"]
+			"flags": ["--", "--execution=wasm",
+                      "--bootnodes=/ip4/127.0.0.1/tcp/30444/p2p/12D3KooWAf7iThMCPgkAncjTfiqPb2Q6nBakwY92shW347ucVbXB"]
 		},
 		{
-			"bin": "./bin/rococo-collator",
+			"bin": "../Acala/target/release/acala",
+            "chain": "dev",
 			"id": "300",
 			"wsPort": 9999,
 			"port": 31300,
 			"balance": "1000000000000000000000",
-			"flags": ["--", "--execution=wasm"]
-		}
-	],
-	"simpleParachains": [
-		{
-			"bin": "./bin/adder-collator",
-			"id": "400",
-			"port": "31400",
-			"balance": "1000000000000000000000"
+			"flags": ["--", "--execution=wasm",
+                      "--bootnodes=/ip4/127.0.0.1/tcp/30444/p2p/12D3KooWAf7iThMCPgkAncjTfiqPb2Q6nBakwY92shW347ucVbXB"]
 		}
 	],
 	"hrmpChannels": [
@@ -60,5 +60,13 @@
 		}
 	],
 	"types": {
+      "AccountInfo": "AccountInfoWithRefCount",
+      "Address": "MultiAddress",
+      "LookupSource": "MultiAddress",
+      "RefCount": "u32",
+      "HrmpChannelId": {
+        "sender": "u32",
+        "receiver": "u32"
+       }
 	}
 }
